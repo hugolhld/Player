@@ -1,22 +1,17 @@
 [
     {
-        "title": "clap",
-        "src": "images/audio.mp3",
+        "title": "Mils 2.0",
+        "src": "images/mils-20.mp3",
         "artist": "Ninho"
     },
     {
-        "title": "hi-hat",
-        "src": "images/audio1.mp3",
+        "title": "Bavard",
+        "src": "images/bavard.mp3",
         "artist": "Ninho"
     },
     {
-        "title": "kick",
-        "src": "images/audio2.mp3",
-        "artist": "Ninho"
-    },
-    {
-        "title": "open-hat",
-        "src": "images/audio3.mp3",
-        "artist": "Ninho"
+        "title": "44",
+        "src": "images/44-feat-yaro.mp3",
+        "artist": "Ninho (feat Yaro)"
     }
 ]
