@@ -1,0 +1,22 @@
+[
+    {
+        "title": "clap",
+        "src": "images/audio.mp3",
+        "artist": "Ninho"
+    },
+    {
+        "title": "hi-hat",
+        "src": "images/audio1.mp3",
+        "artist": "Ninho"
+    },
+    {
+        "title": "kick",
+        "src": "images/audio2.mp3",
+        "artist": "Ninho"
+    },
+    {
+        "title": "open-hat",
+        "src": "images/audio3.mp3",
+        "artist": "Ninho"
+    }
+]

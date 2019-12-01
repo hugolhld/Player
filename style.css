@@ -39,6 +39,81 @@ body{
     cursor: pointer;
 }
 
+.animation-exit{
+    animation: animationExit .5s ;
+    transform: rotate(180deg);
+}
+
+.animation-exit-back{
+    animation: animationExitBack .5s ;
+}
+
+@keyframes animationExit{
+    from{transform: rotate(0);}
+    to{transform: rotate(180deg);}
+}
+
+@keyframes animationExitBack{
+    from{transform: rotate(180deg);}
+    to{transform: rotate(0);}
+}
+
+.sound-controls{
+    display: flex;
+}
+
+.sound-controls .player-volume:hover{
+    background: #2980b9;
+    width: 150px;
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    animation: animationVolumeBar .5s;
+}
+
+.player-volume .volume-bar{
+    width: 70%;
+    height: 5px;
+    margin: 0 auto ;
+    background: grey;
+    border-radius: 5px;
+    position: relative;
+    display: none;
+    justify-content: space-between;
+}
+
+.player-volume:hover .volume-bar{
+    display: flex;
+    
+}
+
+@keyframes animationVolumeBar{
+    from{width: 0;}
+    to{width: 150px;}
+}
+
+.volume-bar .volume-fill{
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border-radius: 5px;
+    position: absolute;
+    transform: scaleX(0);
+    transform-origin: right;
+}
+
+  .volume-circle{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #000;
+      position: absolute;
+      top: -2.5px;
+      transform: translateX(100px);
+      left: -2.5px ;
+  }
+
 .player-container .player-single{
     width: 300px;
     margin: 0 auto;
@@ -76,6 +151,9 @@ body{
     margin: 0 auto;
     width: 15px;
 }
+.single-favorite {
+    width: 15px;
+}
 
 .player-container .player-timer{
     display: flex;
@@ -106,16 +184,6 @@ body{
     transform-origin: 0.0;
 }
 
-/* .seekbar-fill::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #4CAF50;
-    cursor: pointer;
-  } */
-
   .seekbar-circle{
       width: 10px;
       height: 10px;
@@ -145,7 +213,7 @@ body{
     width: 20px;
 }
 
-.player-controls button .btn-active{
+.btn-active{
     filter: invert(30%) sepia(18%) saturate(2916%) hue-rotate(540deg) brightness(127%) contrast(97%);
 }
 
@@ -177,6 +245,8 @@ body{
     cursor: pointer;
 }
 
+
+
 .player-translate{
     animation: singleAnim 2s;
     position: absolute;
@@ -185,14 +255,14 @@ body{
 
 .is-active{
     animation: playlistAnim 2s;
-    transform: translateY(-300px)
+    transform: translateY(-250px)
 }
 
 @keyframes playlistAnim{
     from{transform: translateY(0);}
-    to{transform: translateY(-300px);}
+    to{transform: translateY(-250px);}
 }
 @keyframes singleAnim{
-    from{transform: translateY(-300px);}
+    from{transform: translateY(-250px);}
     to{transform: translateY(0);}
 }
