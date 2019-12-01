@@ -29,14 +29,6 @@ class Player
                 this.audioElement.classList.remove('playing')
             }
         })
-
-        /* this.audioElement.addEventListener('timeupdate', () => 
-        {
-            if(this.audioElement.ended == true)
-            {
-                this.element.querySelector('.btn-play').src = 'images/play-button.svg'
-            }
-        }) */
     }
     setVolume()
     {
@@ -45,16 +37,6 @@ class Player
         const volumeElement = this.element.querySelector('.js-volume-bar')
         const volumeFillElement = this.element.querySelector('.js-volume-fill')
         const volumeCircleElement = this.element.querySelector('.js-volume-circle')
-
-     /*    volumeDownElement.addEventListener('click', () => 
-        {
-            this.audioElement.volume = Math.max(this.audioElement.volume - 0.1, 0)
-        })
-
-        volumeUpElement.addEventListener('click', () => 
-        {
-            this.audioElement.volume = Math.min(this.audioElement.volume + 0.1, 1)
-        }) */
 
         /* setVolume */
 
@@ -76,69 +58,50 @@ class Player
 
         /* Volume Drag */
 
-        let time_drag = {}
-            time_drag.isOver     = false
-            time_drag.isDown     = false
-            time_drag.last_pos   = 0
-            time_drag.save_pos   = 0
-            time_drag.count      = 0
-            time_drag.moveX      = 0
-        /* time drag detection */
-        volumeElement.addEventListener('click', function(e){
-            e.preventDefault() // disable link
-        })
+       volumeElement.addEventListener('mousedown', (_event) =>
+        {
+            const bounding = volumeElement.getBoundingClientRect()
+            const ratio = (_event.clientX - bounding.left) / bounding.width
+
+            this.userIsDraggingSeekBar = true
+            this.audioElement.volume = ratio
+            volumeCircleElement.style.transition = 'transform .0s linear'
+            volumeCircleElement.style.transform = `translateX(${ratio * volumeElement.clientWidth}px)`
         
-        volumeElement.addEventListener('mouseenter',function(){
-            time_drag.isOver   = true
-        })
+            volumeFillElement.style.transition = 'transform .0s linear'
+            volumeFillElement.style.transform = `scaleX(${1 - ratio})`
+
+        } )
+
+        volumeElement.addEventListener('mousemove', (_event) =>
+        {
+            if(this.userIsDraggingSeekBar)
+            {
+            const bounding = volumeElement.getBoundingClientRect()
+            const ratio = (_event.clientX - bounding.left) / bounding.width
+
+            volumeCircleElement.style.transition = 'transform .0s linear'
+            volumeCircleElement.style.transform = `translateX(${ ratio * volumeElement.clientWidth}px)`
         
-        volumeElement.addEventListener('mousedown',function(e){
-            e.preventDefault()
-            time_drag.isDown   = true
-            time_drag.save_pos = e.clientX - volumeElement.getBoundingClientRect().left
-        })
+            volumeFillElement.style.transition = 'transform .0s linear'
+            volumeFillElement.style.transform = `scaleX(${1 - ratio})`
+            this.audioElement.volume = ratio 
+            }
+        } )
+
+        volumeElement.addEventListener('click', (_event) =>
+        {
+            this.userIsDraggingSeekBar = false
+            const bounding = volumeElement.getBoundingClientRect()
+            const ratio = (_event.clientX - bounding.left) / bounding.width
+
+            volumeCircleElement.style.transition = 'transform .0s linear'
+            volumeCircleElement.style.transform = `translateX(${ratio * volumeElement.clientWidth}px)`
         
-        volumeElement.addEventListener('mouseup',function(e){
-            time_drag.isDown = false
-            time_drag.count  = 0
-        })
-        
-        volumeElement.addEventListener('mouseleave',function(e){
-            time_drag.isDown = false
-            time_drag.isOver = false
-            time_drag.count  = 0
-        });
-  
-    /* time drag event */
-    volumeElement.addEventListener('mousemove', function(e){
-    if(time_drag.isDown && time_drag.isOver){
-      if(time_drag.count == 0){
-        time_drag.last_pos = time_drag.moveX
-        time_drag.count++
-      }
-  
-      var mouse_left   = e.clientX - volumeElement.getBoundingClientRect().left,
-          ratio        = (mouse_left/volumeElement.getBoundingClientRect().width)
-          /* time         = ratio * duration */
-      time_drag.moveX  = mouse_left - time_drag.save_pos
-      time_drag.moveX += time_drag.last_pos
-  
-      /* keep button in container */
-      if (time_drag.moveX > -10){
-        time_drag.moveX = 10
-      }
-      else if(time_drag.moveX < -750){
-        time_drag.moveX = 750
-      } 
-      
-      
-      volumeCircleElement.style.transition = 'transform .0s linear'
-      volumeCircleElement.style.transform = `translateX(${100 + time_drag.moveX}px)`
-  
-      volumeFillElement.style.transition = 'transform .0s linear'
-      volumeFillElement.style.transform = `scaleX(${1 -ratio})`
-    }
-})
+            volumeFillElement.style.transition = 'transform .0s linear'
+            volumeFillElement.style.transform = `scaleX(${1-  ratio})`
+            this.audioElement.volume = ratio
+        } )
     }
     setSeekBar()
     {
@@ -188,71 +151,38 @@ class Player
             this.audioElement.currentTime = time
         })
 
-        /* tets */
-        let time_drag = {}
-            time_drag.isOver     = false
-            time_drag.isDown     = false
-            time_drag.last_pos   = 0
-            time_drag.save_pos   = 0
-            time_drag.count      = 0
-            time_drag.moveX      = 0
-        /* time drag detection */
-        seekBarElement.addEventListener('click', function(e){
-            e.preventDefault() // disable link
-        })
-        
-        seekBarElement.addEventListener('mouseenter',function(){
-            time_drag.isOver   = true
-        })
-        
-        seekBarElement.addEventListener('mousedown',function(e){
-            e.preventDefault()
-            time_drag.isDown   = true
-            time_drag.save_pos = e.clientX - seekBarElement.getBoundingClientRect().left
-        })
-        
-        seekBarElement.addEventListener('mouseup',function(e){
-            time_drag.isDown = false
-            time_drag.count  = 0
-        })
-        
-        seekBarElement.addEventListener('mouseleave',function(e){
-            time_drag.isDown = false
-            time_drag.isOver = false
-            time_drag.count  = 0
-        });
-  
-  /* time drag event */
-  seekBarElement.addEventListener('mousemove', function(e){
-    if(time_drag.isDown && time_drag.isOver){
-      if(time_drag.count == 0){
-        time_drag.last_pos = time_drag.moveX
-        time_drag.count++
-      }
-  
-      var mouse_left   = e.clientX - seekBarElement.getBoundingClientRect().left,
-          ratio        = (mouse_left/seekBarElement.getBoundingClientRect().width),
-          time         = ratio * duration
-      time_drag.moveX  = mouse_left - time_drag.save_pos
-      time_drag.moveX += time_drag.last_pos
-  
-      /* keep button in container */
-      if (time_drag.moveX < -10){
-        time_drag.moveX = -10
-      }
-      else if(time_drag.moveX > 750){
-        time_drag.moveX = 750
-      }
-      
-      console.log(time_drag.moveX)
-      circleElement.style.transition = 'transform .0s linear'
-      circleElement.style.transform = `translateX(${time_drag.moveX}px)`
-  
-      fillElement.style.transition = 'transform .0s linear'
-      fillElement.style.transform = `scaleX(${ratio})`
-      currentTime = time
-    }
-  })
+        seekBarElement.addEventListener('mousedown', (_event) =>
+        {
+            const bounding = seekBarElement.getBoundingClientRect()
+            const ratio = (_event.clientX - bounding.left) / bounding.width
+            const time = ratio * this.audioElement.duration
+
+            this.userIsDraggingSeekBar = true
+            this.audioElement.currentTime = time
+
+        } )
+
+        seekBarElement.addEventListener('mousemove', (_event) =>
+        {
+            if(this.userIsDraggingSeekBar)
+            {
+            const bounding = seekBarElement.getBoundingClientRect()
+            const ratio = (_event.clientX - bounding.left) / bounding.width
+            const time = ratio * this.audioElement.duration
+
+            this.audioElement.currentTime = time 
+            }
+        } )
+
+        seekBarElement.addEventListener('click', (_event) =>
+        {
+            this.userIsDraggingSeekBar = false
+            const bounding = seekBarElement.getBoundingClientRect()
+            const ratio = (_event.clientX - bounding.left) / bounding.width
+            const time = ratio * this.audioElement.duration
+
+            this.videoElement.currentTime = time
+        } )
 
     }
 
