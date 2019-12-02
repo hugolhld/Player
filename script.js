@@ -46,7 +46,6 @@ class Player
             const bounding = volumeElement.getBoundingClientRect()
             const ratio = (_event.clientX - bounding.left)  / bounding.width
             const volume = 1 - ratio
-            console.log(volume)
             this.audioElement.volume = volume
 
             volumeCircleElement.style.transition = 'transform .0s linear'
@@ -258,7 +257,6 @@ class Player
         const initPlaylist = _config => 
         {
         const sounds = []
-        console.log(_config.length-1)
         const titleActual = document.querySelector('.single-title')
         titleActual.innerText = _config[0].title + ' - ' +  _config[0].artist
         for(const _playlistConfig of _config)
@@ -298,7 +296,6 @@ class Player
             const btnNext = this.element.querySelector('.js-next')
             const btnPrevious = this.element.querySelector('.js-previous')
             let indexMusic = 0
-            console.log(_config.length)
             btnNext.addEventListener('click',(_event) => 
             {
                 if (indexMusic == _config.length - 1)
@@ -310,7 +307,6 @@ class Player
                 else
                 {
                     indexMusic++
-                    console.log(indexMusic)
                     this.audioElement.setAttribute('src', _config[indexMusic].src);
                     titleActual.innerText = _config[indexMusic].title + ' - ' +  _config[indexMusic].artist
                 }
@@ -321,6 +317,12 @@ class Player
                 else
                 {
                     this.audioElement.pause();
+                }
+                if(btnRandom.classList.contains('random-active'))
+                {
+                    indexMusic = Math.floor(Math.random() * Math.floor(_config.length))
+                    this.audioElement.setAttribute('src', _config[indexMusic].src);
+                    titleActual.innerText = _config[indexMusic].title + ' - ' +  _config[indexMusic].artist
                 }
             })
         
@@ -335,7 +337,6 @@ class Player
                 else
                 {
                     indexMusic--
-                    console.log(indexMusic)
                     this.audioElement.setAttribute('src', _config[indexMusic].src);
                     titleActual.innerText = _config[indexMusic].title + ' - ' +  _config[indexMusic].artist
                 }
@@ -346,6 +347,12 @@ class Player
                 else
                 {
                     this.audioElement.pause();
+                }
+                if(btnRandom.classList.contains('random-active'))
+                {
+                    indexMusic = Math.floor(Math.random() * Math.floor(_config.length))
+                    this.audioElement.setAttribute('src', _config[indexMusic].src);
+                    titleActual.innerText = _config[indexMusic].title + ' - ' +  _config[indexMusic].artist
                 }
             })
 
@@ -370,14 +377,12 @@ class Player
                     if(indexMusic == _config.length - 1)
                     {
                         indexMusic = 0
-                        console.log(indexMusic)
                         this.audioElement.setAttribute('src', _config[indexMusic].src);
                         titleActual.innerText = _config[indexMusic].title + ' - ' +  _config[indexMusic].artist
                     }
                     else
                     {
                         indexMusic ++
-                        console.log(indexMusic)
                         this.audioElement.setAttribute('src', _config[indexMusic].src);
                         titleActual.innerText = _config[indexMusic].title + ' - ' +  _config[indexMusic].artist
                     }
@@ -393,18 +398,6 @@ class Player
                 }
 
             })
-
-            if(btnRandom.classList.contains('random-active'))
-            {
-                alert('ccs')
-                indexMusic += Math.floor(Math.random() * Math.floor(_config.length))
-                    console.log(indexMusic)
-                this.audioElement.addEventListener('ended', () =>
-                {
-                    indexMusic = Math.floor(Math.random() * Math.floor(_config.length))
-                    console.log(indexMusic)
-                })
-            }
         }
 
         

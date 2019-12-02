@@ -248,13 +248,13 @@ body{
 
 
 .player-translate{
-    animation: singleAnim 2s;
+    animation: singleAnim .8s;
     position: absolute;
     top: 60px;
 }
 
 .is-active{
-    animation: playlistAnim 2s;
+    animation: playlistAnim .8s;
     transform: translateY(-250px)
 }
 
